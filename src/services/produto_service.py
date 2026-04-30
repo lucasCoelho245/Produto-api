@@ -1,24 +1,34 @@
-from typing import List, Optional
-from sqlalchemy.orm import Session
+from __future__ import annotations
 
-from src.models.produto_schemas import ProdutoCreate, ProdutoUpdate, ProdutoRead
-from src.services.produto_repo_sqlalchemy import ProdutoRepositorySQLAlchemy
+from typing import List, Optional
+
+from src.models.produto import Produto
+from src.services.produto_repo_base import ProdutoRepositoryBase
 
 
 class ProdutoService:
-    """Camada de serviço — orquestra regras de negócio entre as rotas e o repositório"""
+    """Camada de serviço para orquestrar operações de produtos."""
 
-    def __init__(self, db: Session):
-        self.repo = ProdutoRepositorySQLAlchemy(db)
+    def __init__(self, repo: ProdutoRepositoryBase):
+        self.repo = repo
 
-    def listar_produtos(self) -> List[ProdutoRead]:
+    def listar_produtos(self) -> List[Produto]:
         return self.repo.listar()
 
-    def buscar_produto(self, produto_id: int) -> Optional[ProdutoRead]:
+    def obter_produto(self, produto_id: int) -> Optional[Produto]:
         return self.repo.buscar_por_id(produto_id)
 
-    def criar_produto(self, produto: ProdutoCreate) -> ProdutoRead:
-        return self.repo.criar(produto)
+    def criar_produto(self, nome: str, preco: float, ativo: bool = True) -> Produto:
+        return self.repo.criar(nome=nome, preco=preco, ativo=ativo)
 
-    def atualizar_produto(self, produto_id: int, produto: ProdutoUpdate) -> Optional[ProdutoRead]:
-        return self.repo.atualizar(produto_id, produto)
+    def atualizar_produto(
+        self,
+        produto_id: int,
+        nome: str,
+        preco: float,
+        ativo: bool,
+    ) -> Optional[Produto]:
+        return self.repo.atualizar(produto_id, nome=nome, preco=preco, ativo=ativo)
+
+    def remover_produto(self, produto_id: int) -> bool:
+        return self.repo.remover(produto_id)

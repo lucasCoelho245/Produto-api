@@ -1,7 +1,9 @@
 from __future__ import annotations
 
 from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker, declarative_base
+from sqlalchemy.orm import sessionmaker
+
+from src.models.produto_db import Base  # Base vive em produto_db
 
 SQLALCHEMY_DATABASE_URL = "sqlite:///./data/produtos.db"
 
@@ -12,12 +14,9 @@ engine = create_engine(
 
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
-# Base fica aqui para evitar circular import com produto_db.py
-Base = declarative_base()
 
-
-def criar_tabelas():
-    "Cria as tabelas definidas no modelo ORM src.models.produto_db"
+def criar_tabela() -> None:
+    """Cria todas as tabelas mapeadas no ORM"""
     Base.metadata.create_all(bind=engine)
 
 
