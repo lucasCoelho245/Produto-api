@@ -20,12 +20,12 @@ API RESTful para gerenciamento de produtos, construída com **FastAPI**, **SQLAl
 ## 📁 Estrutura
 
 ```
-api_produtos/
+Produto-api/
 ├── main.py                             # Exemplo isolado da classe Produto
 ├── requirements.txt
 ├── data/                               # Banco SQLite gerado em runtime
 └── src/
-    ├── main.py                         # Reexporta o app pra o uvicorn
+    ├── main.py                         # Entrypoint — reexporta o app pro uvicorn
     ├── models/
     │   ├── produto.py                  # Domínio (regras de negócio)
     │   ├── produto_db.py               # ORM (mapeamento tabela)
@@ -34,7 +34,7 @@ api_produtos/
     │   ├── produto_repo_base.py        # Contrato abstrato do repositório
     │   └── produto_repo_sqlalchemy.py  # Implementação com SQLAlchemy
     └── utils/
-        ├── database.py                 # Engine e sessão
+        ├── database.py                 # Engine, Base e sessão
         └── main.py                     # App FastAPI + rotas
 ```
 
@@ -45,7 +45,7 @@ api_produtos/
 ```bash
 # 1. Clone e entre na pasta
 git clone <seu-repo>
-cd api_produtos
+cd Produto-api
 
 # 2. Crie o ambiente virtual
 python -m venv .venv

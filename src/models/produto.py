@@ -19,4 +19,3 @@ class Produto:
 
     def __str__(self):
         return f"O produto é {self.nome} e o preço é {self.preco}"
-
